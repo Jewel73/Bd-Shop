@@ -1,25 +1,26 @@
-import React,{useState, useEffect} from 'react'
-// import products from '../products'
-import Product from '../components/Product'
+import React, { useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import Message from '../components/Message';
+import Product from '../components/Product';
+import Spinner from '../components/Spinner';
+import { productListAction } from '../redux/actions/productAction';
 
 export default function HomeScreen() {
-        const [products, setProducts]= useState([])
-
+        
+        const productList = useSelector((state) => state.productList)
+        const { loading, error, products } = productList
+       
+        const dispatch = useDispatch()
         useEffect(()=>{
-                const featchProducts = async ()=>{
-                        const {data} = await axios.get('/api/products');
-                        setProducts(data);
-                }
-
-                featchProducts()
-        }, [])
-
+                dispatch(productListAction())
+        }, [dispatch])
+        
+  
         return (
                 <>
                         <Row>
-                        {products.map(product =>(
+                        {loading? <Spinner/> : error? <Message color="red" />: products.map(product =>(
                                 <Col key={product._id} sm={12} md={6} lg={3}>
                                         <Product product = {product} />
                                 </Col>

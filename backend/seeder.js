@@ -24,18 +24,7 @@ const importData = async ()=>{
                 const updatedProduct = products.map(product=>{
                         return {...product, user: adminUser}
                 })
-
                 await Product.insertMany(updatedProduct)
-
-                // const createdUsers = await User.insertMany(users)
-                // const adminUser = createdUsers[0]._id
-                // const sampleProducts = products.map((product) => {
-                //   return { ...product, user: adminUser }
-                // })
-                // await Product.insertMany(sampleProducts)
-
-
-
                 console.log("Data Imported ".green.inverse)
                 process.exit()
 
@@ -53,7 +42,7 @@ const destroyData = async ()=>{
 
                 console.log("Data Destoryed ".green.inverse)
                 process.exit()
-
+                
         } catch (error) {
                 console.error(`${error}`.red.inverse)
         }
